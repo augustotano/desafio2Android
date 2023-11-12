@@ -34,8 +34,14 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCharacterInfoBinding.inflate(layoutInflater, container, false)
-        binding.name.text = character?.name ?: "No name found"
-        binding.description.text = character?.description ?: "No description found"
+        if (character?.description.isNullOrEmpty())
+            binding.description.text = "No name found"
+        else
+            binding.name.text = character?.name
+        if (character?.description.isNullOrEmpty())
+            binding.description.text = "No description found"
+        else
+            binding.description.text = character?.description
         binding.description.movementMethod = ScrollingMovementMethod()
         binding.image.load("${character?.imageUrl}.${character?.imageExtension}")
         binding.comicsView.adapter = comicAdapter
