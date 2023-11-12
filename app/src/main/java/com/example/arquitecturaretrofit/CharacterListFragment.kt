@@ -42,7 +42,7 @@ class CharacterListFragment : Fragment() {
     ): View? {
         binding = FragmentCharacterListBinding.inflate(layoutInflater, container, false)
 
-        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = characterAdapter
         binding.recyclerView.addOnScrollListener( object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
