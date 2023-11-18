@@ -59,7 +59,7 @@
 
 
     <Button
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnRecovery"
         android:layout_width="122dp"
         android:layout_height="50dp"
         android:layout_marginStart="144dp"

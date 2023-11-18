@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.example.arquitecturaretrofit.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFragmentInterface, LoginFragment.LoginFragmentInterface, RegisterFragment.RegisterFragmentInterface {
+class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFragmentInterface, LoginFragment.LoginFragmentInterface, RegisterFragment.RegisterFragmentInterface, RecoveryFragment.RecoveryFragmentInterface {
 
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +62,13 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     override fun onLoginRecovery() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, RecoveryFragment())
+        fragmentTransaction.commit()
+        toggleLoadingBar()
+    }
+
+    override fun onRecovery() {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, LoginFragment())
         fragmentTransaction.commit()
         toggleLoadingBar()
     }
