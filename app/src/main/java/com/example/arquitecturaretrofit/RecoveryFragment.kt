@@ -15,7 +15,7 @@ class RecoveryFragment : Fragment() {
     private var listener : RecoveryFragmentInterface? = null
 
     interface RecoveryFragmentInterface{
-        fun onRecovery()
+        fun onGoLogin()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class RecoveryFragment : Fragment() {
     }
 
     fun onRecovery(){
-        listener?.onRecovery()
+        listener?.onGoLogin()
     }
 
 }

@@ -16,11 +16,10 @@ import com.google.firebase.ktx.Firebase
 
 
 class LoginFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
 
+    private var _binding : FragmentLoginBinding? = null
     private lateinit var binding : FragmentLoginBinding
     private var listener : LoginFragmentInterface? = null
-    private var viewModel = CharacterViewModel()
 
     interface LoginFragmentInterface{
         fun onLogin()
@@ -66,8 +65,7 @@ class LoginFragment : Fragment() {
 
         }
 
-        // Initialize Firebase Auth
-        auth = Firebase.auth
+        //
     }
 
     fun onLogin(){
@@ -135,6 +133,11 @@ class LoginFragment : Fragment() {
             }
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     companion object {
         private const val TAG = "LoginFragment"

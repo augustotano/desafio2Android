@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.example.arquitecturaretrofit.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
+public lateinit var auth: FirebaseAuth
 class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFragmentInterface, LoginFragment.LoginFragmentInterface, RegisterFragment.RegisterFragmentInterface, RecoveryFragment.RecoveryFragmentInterface {
 
     private lateinit var binding : ActivityMainBinding
@@ -18,9 +22,23 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         }
         setContentView(binding.root)
 
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+    }
 
-        fragmentTransaction.add(binding.fragmentContainer.id, LoginFragment());
+
+    public override fun onStart() {
+        super.onStart()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val currentUser = auth.currentUser
+        //si el usuario inicio sesion es no null
+        if (currentUser != null) {
+            fragmentTransaction.add(binding.fragmentContainer.id, CharacterListFragment());
+        }
+        else
+        {
+            fragmentTransaction.add(binding.fragmentContainer.id, LoginFragment());
+        }
         fragmentTransaction.commit()
     }
 
@@ -45,7 +63,7 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         toggleLoadingBar()
     }
 
-    override fun onRegister() {
+    override fun onGoLogin() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, LoginFragment())
         fragmentTransaction.commit()
@@ -53,22 +71,19 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     }
 
     override fun onLoginRegister() {
+        binding.backButton.visibility = View.VISIBLE
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, RegisterFragment())
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
         toggleLoadingBar()
     }
 
     override fun onLoginRecovery() {
+        binding.backButton.visibility = View.VISIBLE
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, RecoveryFragment())
-        fragmentTransaction.commit()
-        toggleLoadingBar()
-    }
-
-    override fun onRecovery() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(binding.fragmentContainer.id, LoginFragment())
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
         toggleLoadingBar()
     }

@@ -16,12 +16,12 @@ import com.google.firebase.ktx.Firebase
 
 class RegisterFragment : Fragment() {
 
+    private var _binding: FragmentRegisterBinding? = null
     private lateinit var binding: FragmentRegisterBinding
     private var listener: RegisterFragmentInterface? = null
-    private lateinit var auth: FirebaseAuth
 
     interface RegisterFragmentInterface {
-        fun onRegister()
+        fun onGoLogin()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,12 +57,11 @@ class RegisterFragment : Fragment() {
 
         }
 
-        // Initialize Firebase Auth
-        auth = Firebase.auth
+        //
     }
 
         fun onRegister() {
-        listener?.onRegister()
+        listener?.onGoLogin()
     }
 
     public override fun onStart() {
@@ -145,6 +144,10 @@ class RegisterFragment : Fragment() {
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     companion object {
         private const val TAG = "RegisterFragment"
