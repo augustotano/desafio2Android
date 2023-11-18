@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "818981180232",
+    "project_id": "desafiodos-41c90",
+    "storage_bucket": "desafiodos-41c90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818981180232:android:28c11c0eb05cd3a650597d",
+        "android_client_info": {
+          "package_name": "com.example.arquitecturaretrofit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCb2ckXkcwickXyfDXfZ2HhPQLP7MjkErk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

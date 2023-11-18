@@ -21,6 +21,7 @@ class CharacterListFragment : Fragment() {
     interface CharacterListFragmentInterface{
         fun onGoToFullCharacter(character : Character)
         fun toggleLoadingBar()
+        fun onGoLogin()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,11 +54,21 @@ class CharacterListFragment : Fragment() {
                 }
             }
         })
+
+        binding.btnSignout.setOnClickListener {
+            auth.signOut()
+            onSignOut()
+        }
+
         return binding.root
     }
 
     fun onGoToFullCharacter(character : Character){
         listener?.onGoToFullCharacter(character)
+    }
+
+    fun onSignOut(){
+        listener?.onGoLogin()
     }
 
     private fun setObservers() {
