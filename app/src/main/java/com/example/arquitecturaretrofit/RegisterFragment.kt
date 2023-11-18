@@ -55,7 +55,6 @@ class RegisterFragment : Fragment() {
             Log.d(TAG, "createAccount:$password")
             createAccount(email, password)
 
-            //onRegister()
         }
 
         // Initialize Firebase Auth
@@ -68,7 +67,6 @@ class RegisterFragment : Fragment() {
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
             reload()
@@ -114,6 +112,7 @@ class RegisterFragment : Fragment() {
                         "Sucess",
                         Toast.LENGTH_SHORT,
                     ).show()
+                    onRegister()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
