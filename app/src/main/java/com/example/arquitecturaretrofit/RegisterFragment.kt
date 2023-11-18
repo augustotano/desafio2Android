@@ -51,8 +51,6 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             val email = binding.usernameInput.text.toString()
             val password = binding.passwordInput.text.toString()
-            Log.d(TAG, "createAccount:$email")
-            Log.d(TAG, "createAccount:$password")
             createAccount(email, password)
 
         }

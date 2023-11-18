@@ -2,12 +2,16 @@ package com.example.arquitecturaretrofit
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.arquitecturaretrofit.databinding.FragmentRecoveryBinding
 import com.example.arquitecturaretrofit.databinding.FragmentRegisterBinding
+import com.google.firebase.auth.AuthResult
+import kotlinx.coroutines.tasks.await
 
 
 class RecoveryFragment : Fragment() {
@@ -36,13 +40,42 @@ class RecoveryFragment : Fragment() {
     ): View? {
         binding = FragmentRecoveryBinding.inflate(layoutInflater, container, false)
         binding.btnRecovery.setOnClickListener {
-            onRecovery()
+            val email = binding.usernameInput.text.toString()
+            resetPassword(email)
         }
         return binding.root
     }
 
     fun onRecovery(){
         listener?.onGoLogin()
+    }
+
+    private fun resetPassword(email: String){
+
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    Log.d(RecoveryFragment.TAG, "Recovery :success")
+                    Toast.makeText(
+                        context,
+                        "Email sent",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    onRecovery()
+                }
+                else{
+                    Toast.makeText(
+                        context,
+                        "Reset failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
+    }
+
+
+    companion object {
+        private const val TAG = "RecoveryFragment"
     }
 
 }
