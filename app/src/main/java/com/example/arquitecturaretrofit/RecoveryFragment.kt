@@ -13,7 +13,6 @@ import com.example.arquitecturaretrofit.databinding.FragmentRegisterBinding
 class RecoveryFragment : Fragment() {
     private lateinit var binding : FragmentRecoveryBinding
     private var listener : RecoveryFragmentInterface? = null
-    private var viewModel = CharacterViewModel()
 
     interface RecoveryFragmentInterface{
         fun onRecovery()
