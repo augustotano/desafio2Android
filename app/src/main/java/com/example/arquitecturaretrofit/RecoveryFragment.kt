@@ -1,0 +1,81 @@
+package com.example.arquitecturaretrofit
+
+import android.content.Context
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import com.example.arquitecturaretrofit.databinding.FragmentRecoveryBinding
+import com.example.arquitecturaretrofit.databinding.FragmentRegisterBinding
+import com.google.firebase.auth.AuthResult
+import kotlinx.coroutines.tasks.await
+
+
+class RecoveryFragment : Fragment() {
+    private lateinit var binding : FragmentRecoveryBinding
+    private var listener : RecoveryFragmentInterface? = null
+
+    interface RecoveryFragmentInterface{
+        fun onGoLogin()
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? RecoveryFragmentInterface
+        if(listener == null){
+            throw ClassCastException("Listener needs to implement RecoveryFragment")
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentRecoveryBinding.inflate(layoutInflater, container, false)
+        binding.btnRecovery.setOnClickListener {
+            val email = binding.usernameInput.text.toString()
+            resetPassword(email)
+        }
+        return binding.root
+    }
+
+    fun onRecovery(){
+        listener?.onGoLogin()
+    }
+
+    private fun resetPassword(email: String){
+
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    Log.d(RecoveryFragment.TAG, "Recovery :success")
+                    Toast.makeText(
+                        context,
+                        "Email sent",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    onRecovery()
+                }
+                else{
+                    Toast.makeText(
+                        context,
+                        "Reset failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
+    }
+
+
+    companion object {
+        private const val TAG = "RecoveryFragment"
+    }
+
+}
