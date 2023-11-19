@@ -9,8 +9,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-public lateinit var auth: FirebaseAuth
-class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFragmentInterface, LoginFragment.LoginFragmentInterface, RegisterFragment.RegisterFragmentInterface, RecoveryFragment.RecoveryFragmentInterface {
+class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFragmentInterface,
+    CharacterInfoFragment.CharacterInfoFragmentInterface,
+    ComicListFragment.ComicListFragmentInterface,
+    LoginFragment.LoginFragmentInterface, 
+    RegisterFragment.RegisterFragmentInterface, 
+    RecoveryFragment.RecoveryFragmentInterface{
 
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +59,10 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         fragmentTransaction.commit()
     }
 
+    override fun onGoToFullComic(comic: Comic) {
+        TODO("Not yet implemented")
+    }
+    
     override fun onLogin() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, CharacterListFragment())
@@ -96,5 +104,11 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         }
     }
 
-
+    override fun goToAllComics(comicId: Int) {
+        binding.backButton.visibility = View.VISIBLE
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, ComicListFragment(comicId))
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
 }

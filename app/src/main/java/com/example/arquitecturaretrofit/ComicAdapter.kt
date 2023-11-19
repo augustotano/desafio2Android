@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.arquitecturaretrofit.databinding.ComicBlockBinding
 
-class ComicAdapter() : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>(){
+class ComicAdapter(private val onClickComic: ((Comic) -> Unit)?) : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>(){
 
-    var dataSet: List<Comic> = emptyList()
+    var dataSet: MutableList<Comic> = mutableListOf()
 
     inner class ComicViewHolder(val binding: ComicBlockBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -25,9 +25,15 @@ class ComicAdapter() : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>(){
     override fun onBindViewHolder(viewHolder: ComicViewHolder, position: Int) {
         val item = dataSet[position];
         with(viewHolder.binding) {
+
             comicName.text = item.name
             comicName.movementMethod = ScrollingMovementMethod()
             comicImage.load("${item.imageUrl}/portrait_incredible.${item.imageExtension}")
+            if(onClickComic != null){
+                root.setOnClickListener{
+                    onClickComic.invoke(item)
+                }
+            }
         }
     }
 }

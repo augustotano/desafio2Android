@@ -15,6 +15,7 @@ class ComicViewModel(characterId : Int) : ViewModel() {
 
     init{
         comicRepository.characterId = characterId
+        comicRepository.offset = 0
         refreshComics()
     }
 
