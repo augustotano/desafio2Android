@@ -24,7 +24,9 @@ interface MarvelService{
         @Path ("characterId") characterId : Int,
         @Query("apikey") apiKey: String,
         @Query("ts") ts: String,
-        @Query("hash") hash : String
+        @Query("hash") hash : String,
+        @Query("offset") offset : Int,
+        @Query("limit") limit : Int
     ) : GetComicsResponseWrapper
 }
 

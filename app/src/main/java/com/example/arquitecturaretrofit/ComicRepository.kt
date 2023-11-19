@@ -7,6 +7,8 @@ import java.util.Date
 
 object ComicRepository {
     var characterId : Int = 0
+    var offset = 0
+    var limit = 30
 
     suspend fun fetchComics() : List<Comic> {
         val timeStamp = Date().time.toString()
@@ -15,7 +17,23 @@ object ComicRepository {
             apiKey = BuildConfig.PUBLIC_KEY,
             ts = timeStamp,
             hash = "$timeStamp${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}".md5().toHex(),
+            limit = 10,
+            offset = 0
         )
+        return obtainComicData(comics)
+    }
+
+    suspend fun fetchAllComics() : List<Comic> {
+        val timeStamp = Date().time.toString()
+        val comics = MarvelClient.service.getComics(
+            characterId = characterId,
+            apiKey = BuildConfig.PUBLIC_KEY,
+            ts = timeStamp,
+            hash = "$timeStamp${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}".md5().toHex(),
+            offset = offset,
+            limit = limit
+        )
+        CharacterRepository.offset += CharacterRepository.limit
         return obtainComicData(comics)
     }
 
