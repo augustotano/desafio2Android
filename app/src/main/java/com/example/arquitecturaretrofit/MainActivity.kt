@@ -2,6 +2,10 @@ package com.example.arquitecturaretrofit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import com.example.arquitecturaretrofit.databinding.ActivityMainBinding
@@ -22,15 +26,61 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.backButton.setOnClickListener {
-            onGoBack()
-        }
+
         setContentView(binding.root)
 
+
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.apply {
+            setHomeAsUpIndicator(com.google.android.material.R.drawable.ic_arrow_back_black_24)
+        }
         // Initialize Firebase Auth
         auth = Firebase.auth
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onGoBack()
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if(auth.currentUser != null){
+            val inflater: MenuInflater = menuInflater
+            inflater.inflate(R.menu.main_menu, menu)
+        } else{
+            val inflater: MenuInflater = menuInflater
+            inflater.inflate(R.menu.simple_menu, menu)
+        }
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection.
+        return when (item.itemId) {
+            R.id.profile -> {
+                // TO DO
+                true
+            }
+            R.id.signOut -> {
+                auth.signOut()
+                onGoLogin()
+                setSupportActionBar(findViewById(R.id.my_toolbar))
+                supportActionBar?.apply {
+                    setHomeAsUpIndicator(com.google.android.material.R.drawable.ic_arrow_back_black_24)
+                }
+                true
+            }
+            R.id.favorites -> {
+                // TO DO
+                true
+            }
+            R.id.search -> {
+                // TO DO
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     public override fun onStart() {
         super.onStart()
@@ -40,8 +90,7 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         if (currentUser != null) {
             fragmentTransaction.add(binding.fragmentContainer.id, CharacterListFragment());
         }
-        else
-        {
+        else {
             fragmentTransaction.add(binding.fragmentContainer.id, LoginFragment());
         }
         fragmentTransaction.commit()
@@ -49,15 +98,21 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
 
     fun onGoBack(){
         supportFragmentManager.popBackStack()
-        binding.backButton.visibility = View.INVISIBLE
+        if(supportFragmentManager.backStackEntryCount == 1){
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(false)
+            }
+        }
     }
 
     override fun onGoToFullCharacter(character : Character) {
-        binding.backButton.visibility = View.VISIBLE
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, CharacterInfoFragment(character))
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onGoToFullComic(comic: Comic) {
@@ -67,49 +122,58 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     override fun onLogin() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, CharacterListFragment())
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-        toggleLoadingBar()
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.apply {
+            setHomeAsUpIndicator(com.google.android.material.R.drawable.ic_arrow_back_black_24)
+        }
+        toggleLoadingBar(true)
     }
 
     override fun onGoLogin() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, LoginFragment())
         fragmentTransaction.commit()
-        toggleLoadingBar()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+        }
     }
 
     override fun onLoginRegister() {
-        binding.backButton.visibility = View.VISIBLE
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, RegisterFragment())
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-        toggleLoadingBar()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onLoginRecovery() {
-        binding.backButton.visibility = View.VISIBLE
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, RecoveryFragment())
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-        toggleLoadingBar()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
-    override fun toggleLoadingBar(){
-        if(binding.indeterminateBar.isVisible){
-            binding.indeterminateBar.visibility = View.INVISIBLE
-        }else{
+    override fun toggleLoadingBar(active : Boolean){
+        if(active){
             binding.indeterminateBar.visibility = View.VISIBLE
+        }else{
+            binding.indeterminateBar.visibility = View.INVISIBLE
         }
     }
 
     override fun goToAllComics(comicId: Int) {
-        binding.backButton.visibility = View.VISIBLE
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, ComicListFragment(comicId))
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 }

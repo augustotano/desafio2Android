@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -20,8 +21,7 @@ class CharacterListFragment : Fragment() {
 
     interface CharacterListFragmentInterface{
         fun onGoToFullCharacter(character : Character)
-        fun toggleLoadingBar()
-        fun onGoLogin()
+        fun toggleLoadingBar(active : Boolean)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,33 +49,32 @@ class CharacterListFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
-                    listener?.toggleLoadingBar()
+                    listener?.toggleLoadingBar(true)
                     viewModel.refreshCharacters()
                 }
             }
         })
 
-        binding.btnSignout.setOnClickListener {
-            auth.signOut()
-            onSignOut()
-        }
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply{
+            setDisplayHomeAsUpEnabled(false)
+            title = resources.getString(R.string.character_list_fragment_title)
+        }
     }
 
     fun onGoToFullCharacter(character : Character){
         listener?.onGoToFullCharacter(character)
     }
 
-    fun onSignOut(){
-        listener?.onGoLogin()
-    }
-
     private fun setObservers() {
         viewModel.characters.observe(this) { characters ->
             characterAdapter.dataSet.addAll(characters)
             characterAdapter.notifyDataSetChanged()
-            listener?.toggleLoadingBar()
+            listener?.toggleLoadingBar(false)
         }
     }
 }

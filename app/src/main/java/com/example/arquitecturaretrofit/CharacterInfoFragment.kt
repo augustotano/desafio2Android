@@ -1,16 +1,19 @@
 package com.example.arquitecturaretrofit
 
+import android.R
 import android.content.Context
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterInfoBinding
+
 
 class CharacterInfoFragment(var character: Character) : Fragment() {
 
@@ -37,6 +40,11 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
         if(listener == null){
             throw ClassCastException("Listener needs to implement CharacterInfoFragmentInterface")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(com.example.arquitecturaretrofit.R.string.character_info_fragment_title)
     }
 
     override fun onCreateView(
