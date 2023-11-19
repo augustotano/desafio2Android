@@ -25,16 +25,4 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:listitem="@layout/character_block" />
 
-    <ImageButton
-        android:id="@+id/btnSignout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="NULL"
-        android:src="@drawable/cierredesesion"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.arquitecturaretrofit.databinding.FragmentComicListBinding
@@ -18,7 +19,7 @@ class ComicListFragment(var characterId: Int) : Fragment() {
 
     interface ComicListFragmentInterface{
         fun onGoToFullComic(comic : Comic)
-        fun toggleLoadingBar()
+        fun toggleLoadingBar(active : Boolean)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class ComicListFragment(var characterId: Int) : Fragment() {
         if(listener == null){
             throw ClassCastException("Listener needs to implement ComicListFragmentInterface")
         }
-        listener?.toggleLoadingBar()
+        listener?.toggleLoadingBar(true)
     }
 
     override fun onCreateView(
@@ -47,12 +48,17 @@ class ComicListFragment(var characterId: Int) : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
-                    listener?.toggleLoadingBar()
+                    listener?.toggleLoadingBar(true)
                     viewModel.refreshComics()
                 }
             }
         })
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.comic_list_fragment_title)
     }
 
     fun onGoToFullComic(comic : Comic){
@@ -63,7 +69,7 @@ class ComicListFragment(var characterId: Int) : Fragment() {
         viewModel.comics.observe(this) { comics ->
             comicAdapter.dataSet.addAll(comics)
             comicAdapter.notifyDataSetChanged()
-            listener?.toggleLoadingBar()
+            listener?.toggleLoadingBar(false)
         }
     }
 }

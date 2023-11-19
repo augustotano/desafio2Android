@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.arquitecturaretrofit.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -22,11 +23,6 @@ class RegisterFragment : Fragment() {
 
     interface RegisterFragmentInterface {
         fun onGoLogin()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
     }
 
     override fun onAttach(context: Context) {
@@ -54,15 +50,18 @@ class RegisterFragment : Fragment() {
             createAccount(email, password)
 
         }
-
-        //
     }
 
-        fun onRegister() {
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.register_fragment_title)
+    }
+
+    fun onRegister() {
         listener?.onGoLogin()
     }
 
-    public override fun onStart() {
+    override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) {
