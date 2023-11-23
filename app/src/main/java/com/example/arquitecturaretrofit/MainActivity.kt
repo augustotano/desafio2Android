@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import com.example.arquitecturaretrofit.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     RecoveryFragment.RecoveryFragmentInterface{
 
     private lateinit var binding : ActivityMainBinding
+    private lateinit var adapter : CharacterAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -103,6 +106,35 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
                 setDisplayHomeAsUpEnabled(false)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val buscar = menu?.findItem(R.id.characterSearcher)
+        val searchView = buscar?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    Toast.makeText(this@MainActivity, "Buscar resultados con : ${query}", Toast.LENGTH_SHORT).show()
+
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun searchCharacter(name: String): MutableList<Character> {
+        var characterList : MutableList<Character> = mutableListOf()
+        for (character in adapter.dataSet)
+            if( character.name == name)
+                characterList.add(character)
+        return characterList
     }
 
     override fun onGoToFullCharacter(character : Character) {
