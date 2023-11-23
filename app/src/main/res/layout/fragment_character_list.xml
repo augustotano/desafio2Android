@@ -19,10 +19,19 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="405dp"
-        android:layout_height="625dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:listitem="@layout/character_block" />
+
+    <SearchView
+        android:id="@+id/characterSearcher"
+        android:layout_width="409dp"
+        android:layout_height="54dp"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
