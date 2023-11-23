@@ -26,17 +26,12 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     RecoveryFragment.RecoveryFragmentInterface{
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var arrayAdapter: ArrayAdapter<Character>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        var characterList = mutableListOf<Character>()
         setContentView(binding.root)
-        arrayAdapter = ArrayAdapter(this, android.R.layout.activity_list_item, android.R.id.text1, characterList)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
         supportActionBar?.apply {
             setHomeAsUpIndicator(com.google.android.material.R.drawable.ic_arrow_back_black_24)
         }
@@ -53,24 +48,6 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         if(auth.currentUser != null){
             val inflater: MenuInflater = menuInflater
             inflater.inflate(R.menu.main_menu, menu)
-            val buscar = menu.findItem(R.id.characterSearcher)
-            val searchView = buscar.actionView as SearchView
-
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    query?.let {
-                        Toast.makeText(this@MainActivity, "Buscar resultados con : ${query}", Toast.LENGTH_SHORT).show()
-                        this@MainActivity.arrayAdapter.filter.filter(query)
-                    }
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    Toast.makeText(this@MainActivity, newText, Toast.LENGTH_SHORT).show()
-
-                    return false
-                }
-            })
         } else{
             val inflater: MenuInflater = menuInflater
             inflater.inflate(R.menu.simple_menu, menu)
