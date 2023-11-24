@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
-    tools:context=".CharacterInfoFragment">
+    tools:context=".view.CharacterInfoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imgLayout"
@@ -60,6 +60,20 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toBottomOf="@+id/name" />
+
+        <ImageButton
+            android:id="@+id/closeButton"
+            android:layout_width="39dp"
+            android:layout_height="35dp"
+            android:backgroundTint="#C30808"
+            android:src="@android:drawable/btn_dialog"
+            app:layout_constraintBottom_toTopOf="@+id/description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.867"
+            app:layout_constraintStart_toEndOf="@+id/name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.761"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

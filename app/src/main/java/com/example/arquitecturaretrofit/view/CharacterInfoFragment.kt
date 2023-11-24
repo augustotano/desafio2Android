@@ -1,6 +1,5 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -8,10 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.model.Comic
+import com.example.arquitecturaretrofit.adapter.ComicAdapter
+import com.example.arquitecturaretrofit.viewModel.ComicViewModel
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterInfoBinding
 
 
@@ -26,7 +30,7 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
     interface CharacterInfoFragmentInterface{
         fun goToAllComics(characterId : Int)
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {1
         Log.d("DEBUG", "Creating fragment")
         super.onCreate(savedInstanceState)
         Log.d("DEBUG", "After super create fragment")
@@ -52,6 +56,23 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCharacterInfoBinding.inflate(layoutInflater, container, false)
+
+        setCharacterData()
+
+        binding.comicsView.adapter = comicAdapter
+        binding.comicsView.layoutManager = LinearLayoutManager(activity?.baseContext, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.seeAllComicsButton.setOnClickListener{
+            goToAllComics()
+        }
+
+        binding.closeButton.setOnClickListener {
+            closeFragment()
+        }
+        return binding.root
+    }
+
+    private fun setCharacterData() {
         if (character?.description.isNullOrEmpty())
             binding.description.text = "No name found"
         else
@@ -62,12 +83,25 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
             binding.description.text = character?.description
         binding.description.movementMethod = ScrollingMovementMethod()
         binding.image.load("${character?.imageUrl}.${character?.imageExtension}")
-        binding.comicsView.adapter = comicAdapter
-        binding.comicsView.layoutManager = LinearLayoutManager(activity?.baseContext, LinearLayoutManager.HORIZONTAL, false)
-        binding.seeAllComicsButton.setOnClickListener{
-            goToAllComics()
-        }
-        return binding.root
+    }
+
+    private fun closeFragment() {
+            val builder = requireContext().let { it1 ->
+                AlertDialog.Builder(it1).setMessage(
+                    "¿Volver a inicio?"
+                ).setPositiveButton(
+                    "Sí, volver."
+                ) { _, _ ->
+                    activity?.supportFragmentManager?.popBackStack()
+                }
+            }
+            builder?.setNegativeButton(
+                "Cancelar"
+            ) { dialog, _ ->
+                // Cerrar el dialog
+                dialog.dismiss()
+            }
+            builder?.show()
     }
 
     private fun setObservers() {

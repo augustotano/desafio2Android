@@ -1,72 +1,87 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.arquitecturaretrofit.databinding.FragmentRegisterBinding
+import com.example.arquitecturaretrofit.R
+import com.example.arquitecturaretrofit.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class RegisterFragment : Fragment() {
 
-    private var _binding: FragmentRegisterBinding? = null
-    private lateinit var binding: FragmentRegisterBinding
-    private var listener: RegisterFragmentInterface? = null
+class LoginFragment : Fragment() {
 
-    interface RegisterFragmentInterface {
-        fun onGoLogin()
+    private var _binding : FragmentLoginBinding? = null
+    private lateinit var binding : FragmentLoginBinding
+    private var listener : LoginFragmentInterface? = null
+
+    interface LoginFragmentInterface{
+        fun onLogin()
+        fun onLoginRegister()
+        fun onLoginRecovery()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? RegisterFragmentInterface
-        if (listener == null) {
-            throw ClassCastException("Listener needs to implement RegisterFragment")
+        listener = context as? LoginFragment.LoginFragmentInterface
+        if(listener == null){
+            throw ClassCastException("Listener needs to implement LoginFragment")
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentRegisterBinding.inflate(layoutInflater, container, false)
+        binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
+        binding.btnRegister.setOnClickListener {
+            onLoginRegister()
+        }
+        binding.recoveryPassword.setOnClickListener {
+            onLoginRecovery()
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.btnRegister.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             val email = binding.usernameInput.text.toString()
             val password = binding.passwordInput.text.toString()
-            createAccount(email, password)
+            signIn(email, password)
 
         }
     }
-
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.register_fragment_title)
-    }
-
-    fun onRegister() {
-        listener?.onGoLogin()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            reload()
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply{
+            title = resources.getString(R.string.login_fragment_title)
+            setDisplayHomeAsUpEnabled(false)
         }
+    }
+
+
+    fun onLogin(){
+        listener?.onLogin()
+    }
+
+    fun onLoginRegister(){
+        listener?.onLoginRegister()
+    }
+
+    fun onLoginRecovery(){
+        listener?.onLoginRecovery()
     }
 
     private fun validateForm(): Boolean {
@@ -90,54 +105,36 @@ class RegisterFragment : Fragment() {
 
         return valid
     }
-    private fun createAccount(email: String, password: String) {
-        Log.d(TAG, "createAccount:$email")
+
+    private fun signIn(email: String, password: String) {
+        Log.d(TAG, "signIn:$email")
         if (!validateForm()) {
             return
         }
 
-
-        auth.createUserWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
+                    Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
                     Toast.makeText(
                         context,
-                        "Sucess",
+                        "Success.",
                         Toast.LENGTH_SHORT,
                     ).show()
-                    onRegister()
+                    onLogin()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        context,
-                        "Revise el formato del mail o si la contraseña cumple medidas de seguridad",
-                        Toast.LENGTH_SHORT,
-                    ).show()
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(
                         context,
                         "Authentication failed.",
                         Toast.LENGTH_SHORT,
                     ).show()
-
                 }
 
             }
-    }
-
-    //verifica que el usuario haya accedido
-    private fun reload() {
-        auth.currentUser!!.reload().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(context, "Reload successful!", Toast.LENGTH_SHORT).show()
-            } else {
-                Log.e(TAG, "reload", task.exception)
-                Toast.makeText(context, "Failed to reload user.", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
 
@@ -147,6 +144,7 @@ class RegisterFragment : Fragment() {
     }
 
     companion object {
-        private const val TAG = "RegisterFragment"
+        private const val TAG = "LoginFragment"
     }
+
 }

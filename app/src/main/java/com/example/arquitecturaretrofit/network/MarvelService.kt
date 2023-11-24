@@ -1,5 +1,7 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.network
 
+import com.example.arquitecturaretrofit.model.GetCharactersResponseWrapper
+import com.example.arquitecturaretrofit.model.GetComicsResponseWrapper
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

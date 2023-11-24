@@ -1,10 +1,11 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.model.CharacterRepository
 import kotlinx.coroutines.launch
 
 class CharacterViewModel : ViewModel() {
@@ -20,7 +21,7 @@ class CharacterViewModel : ViewModel() {
 
     fun refreshCharacters(){
         viewModelScope.launch{
-            charactersRepository.fetchCharacters().run{
+            CharacterRepository.fetchCharacters().run{
                 _characters.postValue(this)
             }
         }

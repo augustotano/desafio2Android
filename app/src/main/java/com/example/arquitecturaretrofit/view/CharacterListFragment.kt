@@ -1,8 +1,7 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,6 +14,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.adapter.CharacterAdapter
+import com.example.arquitecturaretrofit.viewModel.CharacterViewModel
+import com.example.arquitecturaretrofit.R
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterListBinding
 
 class CharacterListFragment : Fragment() {
@@ -77,10 +80,10 @@ class CharacterListFragment : Fragment() {
         }
     }
 
-    private fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater): Boolean {
+     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
         inflater.inflate(R.menu.main_menu, menu)
-        val buscar = menu?.findItem(R.id.characterSearcher)
+        val buscar = menu.findItem(R.id.characterSearcher)
         val searchView = buscar?.actionView as SearchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -88,17 +91,19 @@ class CharacterListFragment : Fragment() {
                 query?.let {
                     Toast.makeText(requireContext(), "Buscar resultados con : ${query}", Toast.LENGTH_SHORT).show()
                     arrayAdapter.filter.filter(query)
+                    characterAdapter.notifyDataSetChanged()
                 }
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 Toast.makeText(requireContext(), newText, Toast.LENGTH_SHORT).show()
+                characterAdapter.notifyDataSetChanged()
 
                 return false
             }
         })
-            return true
+            return super.onCreateOptionsMenu(menu, inflater)
     }
 
 

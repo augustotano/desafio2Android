@@ -1,10 +1,10 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.arquitecturaretrofit.model.Character
 import com.example.arquitecturaretrofit.databinding.CharacterBlockBinding
 
 class CharacterAdapter(var onItemClick : (Character) -> Unit) : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>(){
