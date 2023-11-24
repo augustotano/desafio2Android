@@ -105,15 +105,6 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         }
     }
 
-    /*
-    private fun searchCharacter(name: String): MutableList<Character> {
-        var characterList : MutableList<Character> = mutableListOf()
-        for (character in adapter.dataSet)
-            if( character.name == name)
-                characterList.add(character)
-        return characterList
-    }*/
-
     override fun onGoToFullCharacter(character : Character) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, CharacterInfoFragment(character))

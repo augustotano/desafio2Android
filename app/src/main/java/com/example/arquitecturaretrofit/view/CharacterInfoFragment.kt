@@ -73,8 +73,8 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
     }
 
     private fun setCharacterData() {
-        if (character?.description.isNullOrEmpty())
-            binding.description.text = "No name found"
+        if (character?.name.isNullOrEmpty())
+            binding.name.text = "No name found"
         else
             binding.name.text = character?.name
         if (character?.description.isNullOrEmpty())
