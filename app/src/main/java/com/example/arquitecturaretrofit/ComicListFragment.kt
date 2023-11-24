@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit.view
+package com.example.arquitecturaretrofit
 
 import android.content.Context
 import android.os.Bundle
@@ -9,11 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.arquitecturaretrofit.R
-import com.example.arquitecturaretrofit.adapter.ComicAdapter
 import com.example.arquitecturaretrofit.databinding.FragmentComicListBinding
-import com.example.arquitecturaretrofit.model.Comic
-import com.example.arquitecturaretrofit.viewModel.ComicViewModel
 
 class ComicListFragment(var characterId: Int) : Fragment() {
     private lateinit var binding : FragmentComicListBinding

@@ -1,9 +1,5 @@
-package com.example.arquitecturaretrofit.model
+package com.example.arquitecturaretrofit
 
-import com.example.arquitecturaretrofit.BuildConfig
-import com.example.arquitecturaretrofit.network.MarvelClient
-import com.example.arquitecturaretrofit.network.md5
-import com.example.arquitecturaretrofit.network.toHex
 import java.io.Serializable
 import java.util.Date
 

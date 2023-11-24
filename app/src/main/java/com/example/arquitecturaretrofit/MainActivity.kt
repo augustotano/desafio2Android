@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit.view
+package com.example.arquitecturaretrofit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,16 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import com.example.arquitecturaretrofit.model.Character
-import com.example.arquitecturaretrofit.model.Comic
-import com.example.arquitecturaretrofit.view.ComicListFragment
-import com.example.arquitecturaretrofit.view.LoginFragment
-import com.example.arquitecturaretrofit.R
-import com.example.arquitecturaretrofit.view.RecoveryFragment
-import com.example.arquitecturaretrofit.view.RegisterFragment
 import com.example.arquitecturaretrofit.databinding.ActivityMainBinding
-import com.example.arquitecturaretrofit.view.CharacterInfoFragment
-import com.example.arquitecturaretrofit.view.CharacterListFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -26,7 +17,7 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     ComicListFragment.ComicListFragmentInterface,
     LoginFragment.LoginFragmentInterface,
     RegisterFragment.RegisterFragmentInterface,
-    RecoveryFragment.RecoveryFragmentInterface{
+    RecoveryFragment.RecoveryFragmentInterface {
 
     private lateinit var binding : ActivityMainBinding
 

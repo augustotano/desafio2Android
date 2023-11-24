@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit.view
+package com.example.arquitecturaretrofit
 
 import android.content.Context
 import android.os.Bundle
@@ -12,10 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
-import com.example.arquitecturaretrofit.model.Character
-import com.example.arquitecturaretrofit.model.Comic
-import com.example.arquitecturaretrofit.adapter.ComicAdapter
-import com.example.arquitecturaretrofit.viewModel.ComicViewModel
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterInfoBinding
 
 
@@ -48,7 +44,7 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(com.example.arquitecturaretrofit.R.string.character_info_fragment_title)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.character_info_fragment_title)
     }
 
     override fun onCreateView(

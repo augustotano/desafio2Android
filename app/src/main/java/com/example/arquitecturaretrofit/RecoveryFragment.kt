@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit.view
+package com.example.arquitecturaretrofit
 
 import android.content.Context
 import android.os.Bundle
@@ -9,11 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.arquitecturaretrofit.R
 import com.example.arquitecturaretrofit.databinding.FragmentRecoveryBinding
-import com.example.arquitecturaretrofit.databinding.FragmentRegisterBinding
-import com.google.firebase.auth.AuthResult
-import kotlinx.coroutines.tasks.await
 
 
 class RecoveryFragment : Fragment() {
@@ -62,7 +58,7 @@ class RecoveryFragment : Fragment() {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Log.d(RecoveryFragment.TAG, "Recovery :success")
+                    Log.d(TAG, "Recovery :success")
                     Toast.makeText(
                         context,
                         "Email sent",

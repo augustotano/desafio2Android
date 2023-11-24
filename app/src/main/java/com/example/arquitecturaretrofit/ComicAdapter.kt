@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit.adapter
+package com.example.arquitecturaretrofit
 
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.arquitecturaretrofit.databinding.ComicBlockBinding
-import com.example.arquitecturaretrofit.model.Comic
 
 class ComicAdapter(private val onClickComic: ((Comic) -> Unit)?) : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>(){
 

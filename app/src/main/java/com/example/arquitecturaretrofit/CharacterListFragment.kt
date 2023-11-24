@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit.view
+package com.example.arquitecturaretrofit
 
 import android.content.Context
 import android.os.Bundle
@@ -16,11 +16,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.arquitecturaretrofit.model.Character
-import com.example.arquitecturaretrofit.adapter.CharacterAdapter
-import com.example.arquitecturaretrofit.viewModel.CharacterViewModel
-import com.example.arquitecturaretrofit.R
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterListBinding
+import retrofit2.http.GET
 
 class CharacterListFragment : Fragment() {
 
@@ -83,9 +80,8 @@ class CharacterListFragment : Fragment() {
         }
     }
 
-     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-
-        inflater.inflate(R.menu.main_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.simple_menu, menu)
         val buscar = menu.findItem(R.id.characterSearcher)
         val searchView = buscar?.actionView as SearchView
 
@@ -104,8 +100,9 @@ class CharacterListFragment : Fragment() {
             }
 
         })
-            return super.onCreateOptionsMenu(menu, inflater)
+        super.onCreateOptionsMenu(menu, inflater)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

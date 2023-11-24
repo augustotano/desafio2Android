@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit.utils
+package com.example.arquitecturaretrofit
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

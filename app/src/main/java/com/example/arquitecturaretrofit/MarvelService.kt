@@ -1,12 +1,11 @@
-package com.example.arquitecturaretrofit.network
+package com.example.arquitecturaretrofit
 
-import com.example.arquitecturaretrofit.model.GetCharactersResponseWrapper
-import com.example.arquitecturaretrofit.model.GetComicsResponseWrapper
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 import java.security.MessageDigest
 
 fun String.md5(): ByteArray = MessageDigest.getInstance("MD5").digest(this.toByteArray(Charsets.UTF_8))
@@ -30,6 +29,9 @@ interface MarvelService{
         @Query("offset") offset : Int,
         @Query("limit") limit : Int
     ) : GetComicsResponseWrapper
+
+    @GET("characters?nameStartsWith")
+    suspend fun searchCharactersbyName(@Url url:String) : GetCharactersResponseWrapper
 }
 
 object MarvelClient{
