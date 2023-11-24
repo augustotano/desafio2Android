@@ -116,7 +116,13 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     }
 
     override fun onGoToFullComic(comic: Comic) {
-        TODO("Not yet implemented")
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, ComicInfoFragment())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
     
     override fun onLogin() {

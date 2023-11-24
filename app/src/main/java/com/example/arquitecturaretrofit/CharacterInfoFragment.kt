@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterInfoBinding
 
@@ -18,13 +19,14 @@ import com.example.arquitecturaretrofit.databinding.FragmentCharacterInfoBinding
 class CharacterInfoFragment(var character: Character) : Fragment() {
 
     private var viewModel = ComicViewModel(characterId = character.id)
-    private val comicAdapter = ComicAdapter(null)
+    private val comicAdapter = ComicAdapter(::onGoToFullComic)
     private var listener : CharacterInfoFragmentInterface? = null
 
     private lateinit var binding : FragmentCharacterInfoBinding
 
     interface CharacterInfoFragmentInterface{
         fun goToAllComics(characterId : Int)
+        fun onGoToFullComic(comic : Comic)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("DEBUG", "Creating fragment")
@@ -64,6 +66,15 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
         binding.image.load("${character?.imageUrl}.${character?.imageExtension}")
         binding.comicsView.adapter = comicAdapter
         binding.comicsView.layoutManager = LinearLayoutManager(activity?.baseContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.comicsView.addOnScrollListener( object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(1)) {
+                    //listener?.toggleLoadingBar(true)
+                    //viewModel.refreshComic()
+                }
+            }
+        })
         binding.seeAllComicsButton.setOnClickListener{
             goToAllComics()
         }
@@ -79,5 +90,9 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
 
     fun goToAllComics(){
         listener?.goToAllComics(character.id)
+    }
+
+    fun onGoToFullComic(comic : Comic){
+        listener?.onGoToFullComic(comic)
     }
 }
