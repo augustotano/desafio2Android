@@ -17,7 +17,8 @@ interface MarvelService{
         @Query("ts") ts: String,
         @Query("hash") hash : String,
         @Query("offset") offset: Int,
-        @Query("limit") limit : Int
+        @Query("limit") limit : Int,
+        //@Query("nameStartsWith") nameStartsWith : String = ""
     ) : GetCharactersResponseWrapper
 
     @GET("characters/{characterId}/comics")
@@ -30,8 +31,6 @@ interface MarvelService{
         @Query("limit") limit : Int
     ) : GetComicsResponseWrapper
 
-    @GET("characters?nameStartsWith")
-    suspend fun searchCharactersbyName(@Url url:String) : GetCharactersResponseWrapper
 }
 
 object MarvelClient{

@@ -55,7 +55,27 @@ class CharacterListFragment : Fragment() {
 
         initRecyclerView()
 
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.characterSearcherv2.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    Toast.makeText(requireContext(), "Buscar resultados con : $query", Toast.LENGTH_SHORT).show()
+                    viewModel.refreshCharacters()                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return false
+            }
+
+        })
     }
 
     private fun initRecyclerView() {
@@ -78,29 +98,6 @@ class CharacterListFragment : Fragment() {
             setDisplayHomeAsUpEnabled(false)
             title = resources.getString(R.string.character_list_fragment_title)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.simple_menu, menu)
-        val buscar = menu.findItem(R.id.characterSearcher)
-        val searchView = buscar?.actionView as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    Toast.makeText(requireContext(), "Buscar resultados con : $query", Toast.LENGTH_SHORT).show()
-                    characterAdapter.filter(query)
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                characterAdapter.filter(newText)
-                return false
-            }
-
-        })
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
 

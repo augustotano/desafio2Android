@@ -9,7 +9,7 @@ android {
     compileSdk = 34
     android.buildFeatures.buildConfig = true
     defaultConfig {
-        applicationId = "com.example.marvel_app"
+        applicationId = "com.example.arquitecturaretrofit"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
