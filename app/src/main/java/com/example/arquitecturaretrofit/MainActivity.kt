@@ -183,4 +183,14 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
             setDisplayHomeAsUpEnabled(true)
         }
     }
+
+    override fun goToAllCharacters(comicId: Int) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, CharacterListFragment())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
+    }
 }

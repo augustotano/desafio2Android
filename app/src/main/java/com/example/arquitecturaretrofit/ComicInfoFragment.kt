@@ -23,6 +23,7 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
     private val characterAdapter = ComicCharactersAdapter(::onGoToFullCharacter)
 
     interface ComicInfoFragmentInterface{
+        fun goToAllCharacters(comicId : Int)
         fun onGoToFullCharacter(character: Character)
     }
 
@@ -76,6 +77,10 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
             }
         })
 
+        binding.seeAllCharactersButton.setOnClickListener{
+            goToAllCharacters()
+        }
+
         return binding.root
     }
 
@@ -84,6 +89,10 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
             characterAdapter.dataSet.addAll(characters)
             characterAdapter.notifyDataSetChanged()
         }
+    }
+
+    fun goToAllCharacters(){
+        listener?.goToAllCharacters(comic.id)
     }
 
     fun onGoToFullCharacter(character: Character){

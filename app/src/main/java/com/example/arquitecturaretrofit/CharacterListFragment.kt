@@ -62,7 +62,6 @@ class CharacterListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (requireActivity() as AppCompatActivity).supportActionBar?.apply{
-            setDisplayHomeAsUpEnabled(false)
             title = resources.getString(R.string.character_list_fragment_title)
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
