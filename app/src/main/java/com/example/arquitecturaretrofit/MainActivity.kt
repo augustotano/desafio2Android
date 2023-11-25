@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
 
     override fun onGoToFullComic(comic: Comic) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(binding.fragmentContainer.id, ComicInfoFragment())
+        fragmentTransaction.replace(binding.fragmentContainer.id, ComicInfoFragment(comic))
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
         supportActionBar?.apply {

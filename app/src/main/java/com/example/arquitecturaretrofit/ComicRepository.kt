@@ -47,6 +47,8 @@ object ComicRepository {
                 name = comicReceived.title,
                 imageUrl = comicReceived.thumbnail.path,
                 imageExtension = comicReceived.thumbnail.extension,
+                description = comicReceived.description,
+                issueNumber = comicReceived.issueNumber,
             )
             comics.add(comic)
         }
@@ -58,6 +60,8 @@ data class Comic(
     val name : String,
     val imageUrl : String,
     val imageExtension : String,
+    val description: String?,
+    val issueNumber: Int?,
 ) : Serializable
 
 data class GetComicsResponseWrapper(

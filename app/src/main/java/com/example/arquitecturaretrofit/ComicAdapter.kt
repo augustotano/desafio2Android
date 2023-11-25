@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.arquitecturaretrofit.databinding.ComicBlockBinding
 
-class ComicAdapter(private val onClickComic: ((Comic) -> Unit)?) : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>(){
+class ComicAdapter(val onClickComic: ((Comic) -> Unit)?) : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>(){
 
     var dataSet: MutableList<Comic> = mutableListOf()
 

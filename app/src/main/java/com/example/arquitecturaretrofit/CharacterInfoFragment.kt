@@ -28,7 +28,7 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
 
     interface CharacterInfoFragmentInterface{
         fun goToAllComics(characterId : Int)
-        fun onGoToFullComic(comic : Comic)
+        fun onGoToFullComic(comic: Comic)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("DEBUG", "Creating fragment")
@@ -59,8 +59,8 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCharacterInfoBinding.inflate(layoutInflater, container, false)
-        if (character?.description.isNullOrEmpty())
-            binding.description.text = "No name found"
+        if (character?.name.isNullOrEmpty())
+            binding.name.text = "No name found"
         else
             binding.name.text = character?.name
         if (character?.description.isNullOrEmpty())
@@ -71,15 +71,8 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
         binding.image.load("${character?.imageUrl}.${character?.imageExtension}")
         binding.comicsView.adapter = comicAdapter
         binding.comicsView.layoutManager = LinearLayoutManager(activity?.baseContext, LinearLayoutManager.HORIZONTAL, false)
-        binding.comicsView.addOnScrollListener( object : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) {
-                    //listener?.toggleLoadingBar(true)
-                    //viewModel.refreshComic()
-                }
-            }
-        })
+
+
         binding.seeAllComicsButton.setOnClickListener{
             goToAllComics()
         }
@@ -97,7 +90,7 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
         listener?.goToAllComics(character.id)
     }
 
-    fun onGoToFullComic(comic : Comic){
+    fun onGoToFullComic(comic: Comic){
         listener?.onGoToFullComic(comic)
     }
 }

@@ -6,17 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import coil.load
+import com.example.arquitecturaretrofit.databinding.FragmentComicInfoBinding
 
 
-class ComicInfoFragment : Fragment() {
+class ComicInfoFragment(var comic: Comic) : Fragment() {
+
+    private val comicRepository = ComicRepository
+    private lateinit var binding : FragmentComicInfoBinding
+    private var viewModel = CharacterViewModel()
+    private val characterAdapter = CharacterAdapter(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setObservers()
     }
+
+
 
     override fun onResume() {
         super.onResume()
@@ -27,11 +35,30 @@ class ComicInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comic_info, container, false)
+        binding = FragmentComicInfoBinding.inflate(layoutInflater, container, false)
+
+        binding.image.load("${comic?.imageUrl}.${comic?.imageExtension}")
+
+        if (comic?.name.isNullOrEmpty())
+            binding.name.text = "No name found"
+        else
+            binding.name.text = comic?.name
+
+        if (comic?.description.isNullOrEmpty())
+            binding.description.text = "No description found"
+        else
+            binding.description.text = comic?.description
+
+        binding.issueNumber.text = comic?.issueNumber?.toString()
+
+        return binding.root
     }
 
-    companion object {
-
+    private fun setObservers() {
+        viewModel.characters.observe(this) { characters ->
+            characterAdapter.dataSet.addAll(characters)
+            characterAdapter.notifyDataSetChanged()
+        }
     }
+
 }
