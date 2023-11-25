@@ -6,7 +6,6 @@
     <string name="login_fragment_title">Iniciar Sesión</string>
     <string name="register_fragment_title">Registrarse</string>
     <string name="recovery_fragment_title">Recuperar Cuenta</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="comic_info_fragment_title">Perfil del comic</string>
+    <string name="favorite_fragment_title">Favoritos</string>
 </resources>
