@@ -2,10 +2,10 @@ package com.example.arquitecturaretrofit
 
 import android.content.Context
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterListBinding
-import retrofit2.http.GET
+
 
 class CharacterListFragment : Fragment() {
 
@@ -26,6 +26,10 @@ class CharacterListFragment : Fragment() {
     private var listener : CharacterListFragmentInterface? = null
     private var viewModel = CharacterViewModel()
     private val characterAdapter = CharacterAdapter(::onGoToFullCharacter)
+    private val handler = Handler()
+    private val delay = 5000L
+    private var lastQuery: String? = null
+
 
     interface CharacterListFragmentInterface{
         fun onGoToFullCharacter(character : Character)
@@ -61,20 +65,39 @@ class CharacterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        searchCharacters()
+    }
 
-        binding.characterSearcherv2.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    private fun searchCharacters() {
+        binding.searchCharacter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    Toast.makeText(requireContext(), "Buscar resultados con : $query", Toast.LENGTH_SHORT).show()
-                    viewModel.refreshCharacters()                }
+                Toast.makeText(requireContext(), "Buscar resultados con : $query", Toast.LENGTH_SHORT).show()
+                viewModel.queryString = query
+                viewModel.filterCharacters(resetCache = true)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    Toast.makeText(requireContext(), "New text is empty", Toast.LENGTH_SHORT).show()
+                    viewModel.queryString = newText
+                    viewModel.refreshCharacters(resetCache = true)
+                } else {
+                    // Cancelar ejecuciones pendientes del temporizador
+                    handler.removeCallbacksAndMessages(null)
 
+                    // Programar una nueva ejecución después de 3 segundos
+                    lastQuery = newText
+                    handler.postDelayed({
+                        if (newText == lastQuery) {
+                            // Realizar la llamada al método después de 3 segundos
+                            viewModel.queryString = newText
+                            viewModel.filterCharacters(resetCache = true)
+                        }
+                    }, delay)
+                }
                 return false
             }
-
         })
     }
 
@@ -99,7 +122,6 @@ class CharacterListFragment : Fragment() {
             title = resources.getString(R.string.character_list_fragment_title)
         }
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

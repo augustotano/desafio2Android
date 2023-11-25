@@ -6,14 +6,34 @@ import java.util.Date
 object CharacterRepository {
     var offset = 0;
     var limit = 30;
-    suspend fun fetchCharacters() : List<Character> {
+    suspend fun fetchCharacters(resetCache: Boolean = false) : List<Character> {
+        if (resetCache) {
+            offset = 0
+        }
         val timeStamp = Date().time.toString()
         val characters = MarvelClient.service.getCharacters(
                 apiKey = BuildConfig.PUBLIC_KEY,
                 ts = timeStamp,
                 hash = "$timeStamp${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}".md5().toHex(),
                 offset = offset,
-                limit = limit
+                limit = limit,
+        )
+        offset += limit
+        return obtainCharacterAndComicData(characters)
+    }
+
+    suspend fun filterCharacters(filterName: String ?= null, resetCache: Boolean = false) : List<Character> {
+        if (resetCache) {
+            offset = 0
+        }
+        val timeStamp = Date().time.toString()
+        val characters = MarvelClient.service.getCharacters(
+            apiKey = BuildConfig.PUBLIC_KEY,
+            ts = timeStamp,
+            hash = "$timeStamp${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}".md5().toHex(),
+            offset = offset,
+            limit = limit,
+            nameStartsWith = filterName
         )
         offset += limit
         return obtainCharacterAndComicData(characters)
