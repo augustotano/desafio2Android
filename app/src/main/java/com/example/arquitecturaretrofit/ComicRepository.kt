@@ -18,10 +18,12 @@ object ComicRepository {
             limit = 10,
             offset = 0
         )
+        offset += limit
         return obtainComicData(comics)
     }
 
     suspend fun fetchAllComics() : List<Comic> {
+        Log.d("Test", "It's calling it $offset")
         val timeStamp = Date().time.toString()
         val comics = MarvelClient.service.getComics(
             characterId = characterId,
@@ -31,7 +33,7 @@ object ComicRepository {
             offset = offset,
             limit = limit
         )
-        CharacterRepository.offset += CharacterRepository.limit
+        offset += limit
         return obtainComicData(comics)
     }
 

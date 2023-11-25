@@ -26,4 +26,12 @@ class ComicViewModel(characterId : Int) : ViewModel() {
             }
         }
     }
+
+    fun refreshMoreComics(){
+        viewModelScope.launch{
+            comicRepository.fetchAllComics().run{
+                _comics.postValue(this)
+            }
+        }
+    }
 }

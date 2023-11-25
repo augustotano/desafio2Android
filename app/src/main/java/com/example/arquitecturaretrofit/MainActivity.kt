@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
                 true
             }
             R.id.favorites -> {
-                // TO DO
+                onGoToFavorites()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -162,6 +162,16 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     override fun goToAllComics(comicId: Int) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, ComicListFragment(comicId))
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    fun onGoToFavorites(){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, FavoriteListFragment())
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
         supportActionBar?.apply {
