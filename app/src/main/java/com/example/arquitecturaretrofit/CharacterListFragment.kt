@@ -24,7 +24,7 @@ class CharacterListFragment : Fragment() {
     private var viewModel = CharacterViewModel()
     private val characterAdapter = CharacterAdapter(::onGoToFullCharacter)
     private val handler = Handler()
-    private val delay = 5000L
+    private val delay = 3000L
     private var lastQuery: String? = null
 
     interface CharacterListFragmentInterface{
@@ -68,6 +68,7 @@ class CharacterListFragment : Fragment() {
                     "Buscar resultados con : $query",
                     Toast.LENGTH_SHORT
                 ).show()
+                characterAdapter.dataSet.clear()
                 viewModel.queryString = query
                 viewModel.filterCharacters(resetCache = true)
                 return true
@@ -88,6 +89,7 @@ class CharacterListFragment : Fragment() {
                         if (newText == lastQuery) {
                             // Realizar la llamada al método después de 5 segundos
                             viewModel.queryString = newText
+                            characterAdapter.dataSet.clear()
                             viewModel.filterCharacters(resetCache = true)
                         }
                     }, delay)
@@ -109,7 +111,6 @@ class CharacterListFragment : Fragment() {
                     if (lastQuery.isNullOrEmpty()) {
                         viewModel.refreshCharacters()
                     } else {
-                        characterAdapter.dataSet.clear()
                         viewModel.filterCharacters()
                     }
                 }
@@ -144,12 +145,9 @@ class CharacterListFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.characters.observe(this) { characters ->
-            activity?.runOnUiThread {
-                characterAdapter.dataSet.clear()
-                characterAdapter.dataSet.addAll(characters)
-                characterAdapter.notifyDataSetChanged()
-                listener?.toggleLoadingBar(false)
-            }
+            characterAdapter.dataSet.addAll(characters)
+            characterAdapter.notifyDataSetChanged()
+            listener?.toggleLoadingBar(false)
         }
     }
 }
