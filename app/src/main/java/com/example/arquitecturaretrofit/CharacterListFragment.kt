@@ -121,7 +121,7 @@ class CharacterListFragment : Fragment() {
                     if (lastQuery.isNullOrEmpty()) {
                         viewModel.refreshCharacters()
                     } else {
-                        viewModel.filterCharacters(resetCache = true)
+                        viewModel.filterCharacters()
                     }
                 }
             }
