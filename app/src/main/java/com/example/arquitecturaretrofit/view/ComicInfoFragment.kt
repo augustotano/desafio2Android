@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
 import android.content.Context
 import android.graphics.Color
@@ -12,14 +12,19 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.arquitecturaretrofit.model.Comic
+import com.example.arquitecturaretrofit.R
+import com.example.arquitecturaretrofit.adapter.ComicCharactersAdapter
 import com.example.arquitecturaretrofit.databinding.FragmentComicInfoBinding
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.viewModel.ComicCharacterViewModel
 
 
 class ComicInfoFragment(var comic: Comic) : Fragment() {
 
     private lateinit var binding : FragmentComicInfoBinding
     private var viewModel = ComicCharacterViewModel(comicId = comic.id)
-    private var listener : ComicInfoFragment.ComicInfoFragmentInterface? = null
+    private var listener : ComicInfoFragmentInterface? = null
     private val characterAdapter = ComicCharactersAdapter(::onGoToFullCharacter)
 
     interface ComicInfoFragmentInterface{
@@ -34,7 +39,7 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? ComicInfoFragment.ComicInfoFragmentInterface
+        listener = context as? ComicInfoFragmentInterface
         if(listener == null){
             throw ClassCastException("Listener needs to implement ComicInfoFragmentInterface")
         }
@@ -42,7 +47,7 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(com.example.arquitecturaretrofit.R.string.comic_info_fragment_title)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.comic_info_fragment_title)
         (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#407bb9")))
     }
     override fun onCreateView(

@@ -1,26 +1,27 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
-import android.R
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.model.Comic
+import com.example.arquitecturaretrofit.adapter.ComicAdapter
+import com.example.arquitecturaretrofit.viewModel.ComicViewModel
+import com.example.arquitecturaretrofit.network.FavoriteCharacter
+import com.example.arquitecturaretrofit.viewModel.FavoriteViewModel
 import com.example.arquitecturaretrofit.R.drawable.avd_heart_empty
 import com.example.arquitecturaretrofit.R.drawable.avd_heart_full
-import com.example.arquitecturaretrofit.R.drawable.favorite
 import com.example.arquitecturaretrofit.databinding.FragmentCharacterInfoBinding
-import com.example.arquitecturaretrofit.R.drawable.not_favorite
 
 class CharacterInfoFragment(var character: Character) : Fragment() {
 

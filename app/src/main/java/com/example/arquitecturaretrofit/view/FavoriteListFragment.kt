@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.arquitecturaretrofit.viewModel.FavoriteViewModel
+import com.example.arquitecturaretrofit.R
+import com.example.arquitecturaretrofit.adapter.CharacterAdapter
 import com.example.arquitecturaretrofit.databinding.FragmentFavoriteListBinding
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.network.FavoriteCharacter
 
 class FavoriteListFragment : Fragment() {
     private lateinit var binding : FragmentFavoriteListBinding
@@ -44,13 +49,15 @@ class FavoriteListFragment : Fragment() {
     fun parseFavorites(favoriteCharacters : List<FavoriteCharacter>) : MutableList<Character>{
         val characterList = mutableListOf<Character>()
         for(favoriteCharacter in favoriteCharacters){
-            characterList.add(Character(
+            characterList.add(
+                Character(
                 favoriteCharacter.characterId,
                 favoriteCharacter.name ?: "",
                 favoriteCharacter.imageUrl ?: "",
                 favoriteCharacter.imageExtension ?: "",
                 favoriteCharacter.description ?: ""
-            ))
+            )
+            )
         }
         return characterList
     }

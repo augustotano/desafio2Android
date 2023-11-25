@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import coil.load
-import com.example.arquitecturaretrofit.databinding.FragmentFavoriteListBinding
 import com.example.arquitecturaretrofit.databinding.FragmentSeePerfileBinding
 
 

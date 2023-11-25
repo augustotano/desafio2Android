@@ -1,7 +1,9 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.model
 
 import android.content.Context
 import androidx.room.Room
+import com.example.arquitecturaretrofit.network.AppDatabase
+import com.example.arquitecturaretrofit.network.FavoriteCharacter
 
 object FavoriteRepository {
 

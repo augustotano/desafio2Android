@@ -1,8 +1,7 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.network
 
 import androidx.room.ColumnInfo
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.PrimaryKey

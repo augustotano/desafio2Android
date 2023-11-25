@@ -1,4 +1,4 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
 import android.content.Context
 import android.graphics.Color
@@ -16,6 +16,10 @@ import com.example.arquitecturaretrofit.databinding.FragmentCharacterListBinding
 import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.viewModel.CharacterViewModel
+import com.example.arquitecturaretrofit.R
+import com.example.arquitecturaretrofit.adapter.CharacterAdapter
 
 class CharacterListFragment : Fragment() {
 

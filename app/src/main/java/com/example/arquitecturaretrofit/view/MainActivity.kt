@@ -1,14 +1,15 @@
-package com.example.arquitecturaretrofit
+package com.example.arquitecturaretrofit.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.isVisible
+import com.example.arquitecturaretrofit.R
 import com.example.arquitecturaretrofit.databinding.ActivityMainBinding
+import com.example.arquitecturaretrofit.model.Character
+import com.example.arquitecturaretrofit.model.Comic
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -18,9 +19,9 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     CharacterInfoFragment.CharacterInfoFragmentInterface,
     ComicInfoFragment.ComicInfoFragmentInterface,
     ComicListFragment.ComicListFragmentInterface,
-    LoginFragment.LoginFragmentInterface, 
-    RegisterFragment.RegisterFragmentInterface, 
-    RecoveryFragment.RecoveryFragmentInterface{
+    LoginFragment.LoginFragmentInterface,
+    RegisterFragment.RegisterFragmentInterface,
+    RecoveryFragment.RecoveryFragmentInterface {
 
     private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
