@@ -76,8 +76,8 @@ class CharacterListFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
-                    Toast.makeText(requireContext(), "New text is empty", Toast.LENGTH_SHORT).show()
                     viewModel.queryString = newText
+                    characterAdapter.dataSet.clear()
                     viewModel.refreshCharacters(resetCache = true)
                 } else {
                     // Cancelar ejecuciones pendientes del temporizador
