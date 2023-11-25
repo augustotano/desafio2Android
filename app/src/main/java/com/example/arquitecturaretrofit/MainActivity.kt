@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 public lateinit var auth: FirebaseAuth
 class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFragmentInterface,
     CharacterInfoFragment.CharacterInfoFragmentInterface,
+    ComicInfoFragment.ComicInfoFragmentInterface,
     ComicListFragment.ComicListFragmentInterface,
     LoginFragment.LoginFragmentInterface, 
     RegisterFragment.RegisterFragmentInterface, 

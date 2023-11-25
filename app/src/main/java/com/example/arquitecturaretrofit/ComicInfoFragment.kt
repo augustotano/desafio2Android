@@ -1,5 +1,6 @@
 package com.example.arquitecturaretrofit
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,13 +10,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.arquitecturaretrofit.databinding.FragmentComicInfoBinding
 
 
 class ComicInfoFragment(var comic: Comic) : Fragment() {
 
-    private val comicRepository = ComicRepository
     private lateinit var binding : FragmentComicInfoBinding
     private var viewModel = ComicCharacterViewModel(comicId = comic.id)
     private var listener : ComicInfoFragment.ComicInfoFragmentInterface? = null
@@ -30,7 +31,13 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
         setObservers()
     }
 
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? ComicInfoFragment.ComicInfoFragmentInterface
+        if(listener == null){
+            throw ClassCastException("Listener needs to implement ComicInfoFragmentInterface")
+        }
+    }
 
     override fun onResume() {
         super.onResume()
@@ -60,6 +67,14 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
         binding.characterView.adapter = characterAdapter
         binding.characterView.layoutManager = LinearLayoutManager(activity?.baseContext, LinearLayoutManager.HORIZONTAL, false)
 
+        binding.characterView.addOnScrollListener( object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(1)) {
+                    viewModel.refreshComicCharacter()
+                }
+            }
+        })
 
         return binding.root
     }
