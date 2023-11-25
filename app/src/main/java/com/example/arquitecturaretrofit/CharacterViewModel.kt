@@ -10,6 +10,8 @@ import kotlinx.coroutines.launch
 class CharacterViewModel : ViewModel() {
     private val charactersRepository = CharacterRepository
     private val _characters = MutableLiveData<List<Character>>()
+    var queryString: String? = null
+
 
     val characters : LiveData<List<Character>>
         get() = _characters
@@ -18,9 +20,17 @@ class CharacterViewModel : ViewModel() {
         refreshCharacters()
     }
 
-    fun refreshCharacters(){
+    fun refreshCharacters(resetCache: Boolean = false){
         viewModelScope.launch{
-            charactersRepository.fetchCharacters().run{
+            charactersRepository.fetchCharacters(resetCache = resetCache).run{
+                _characters.postValue(this)
+            }
+        }
+    }
+
+    fun filterCharacters(resetCache: Boolean = false){
+        viewModelScope.launch{
+            CharacterRepository.filterCharacters(filterName = queryString, resetCache = resetCache).run{
                 _characters.postValue(this)
             }
         }
