@@ -1,6 +1,8 @@
 package com.example.arquitecturaretrofit
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -55,6 +57,9 @@ class RegisterFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.register_fragment_title)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(Color.parseColor("#407bb9"))
+        )
     }
 
     fun onRegister() {

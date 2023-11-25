@@ -1,6 +1,8 @@
 package com.example.arquitecturaretrofit
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -68,6 +70,9 @@ class LoginFragment : Fragment() {
             title = resources.getString(R.string.login_fragment_title)
             setDisplayHomeAsUpEnabled(false)
         }
+        (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(Color.parseColor("#407bb9"))
+        )
     }
 
 

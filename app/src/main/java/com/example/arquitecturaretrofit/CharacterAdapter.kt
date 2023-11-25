@@ -1,13 +1,12 @@
 package com.example.arquitecturaretrofit
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.arquitecturaretrofit.databinding.CharacterBlockBinding
 
-class CharacterAdapter(var onItemClick : (Character) -> Unit) : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>(){
+class CharacterAdapter(val onItemClick: ((Character) -> Unit)?) : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>(){
 
     var dataSet: MutableList<Character> = mutableListOf()
 
@@ -27,8 +26,10 @@ class CharacterAdapter(var onItemClick : (Character) -> Unit) : RecyclerView.Ada
         with(viewHolder.binding) {
             characterImage.load("${item.imageUrl}/portrait_incredible.${item.imageExtension}")
             characterName.text = item.name
-            root.setOnClickListener{
-                onItemClick(item)
+            if(onItemClick != null) {
+                root.setOnClickListener {
+                    onItemClick.invoke(item)
+                }
             }
         }
     }

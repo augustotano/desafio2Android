@@ -7,31 +7,30 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.arquitecturaretrofit.databinding.ComicBlockBinding
 
-class ComicAdapter(val onClickComic: ((Comic) -> Unit)?) : RecyclerView.Adapter<ComicAdapter.ComicViewHolder>(){
+class ComicCharactersAdapter(val onClickCharacter: ((Character) -> Unit)?) : RecyclerView.Adapter<ComicCharactersAdapter.ComicCharactersViewHolder>(){
 
-    var dataSet: MutableList<Comic> = mutableListOf()
+    var dataSet: MutableList<Character> = mutableListOf()
 
-    inner class ComicViewHolder(val binding: ComicBlockBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ComicCharactersViewHolder(val binding: ComicBlockBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicCharactersViewHolder {
         val view = ComicBlockBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return ComicViewHolder(view)
+        return ComicCharactersViewHolder(view)
     }
 
     override fun getItemCount() = dataSet.size
 
-    override fun onBindViewHolder(viewHolder: ComicViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ComicCharactersViewHolder, position: Int) {
         val item = dataSet[position];
         with(viewHolder.binding) {
-
             comicName.text = item.name
             comicName.movementMethod = ScrollingMovementMethod()
             comicImage.load("${item.imageUrl}/portrait_incredible.${item.imageExtension}")
-            if(onClickComic != null){
+            if(onClickCharacter != null){
                 root.setOnClickListener{
-                    onClickComic.invoke(item)
+                    onClickCharacter.invoke(item)
                 }
             }
         }

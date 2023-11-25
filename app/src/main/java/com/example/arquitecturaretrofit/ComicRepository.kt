@@ -46,9 +46,12 @@ object ComicRepository {
         val comics = mutableListOf<Comic>()
         for (comicReceived in comicsResponseWrapper.data.results){
             val comic = Comic(
+                id = comicReceived.id,
                 name = comicReceived.title,
                 imageUrl = comicReceived.thumbnail.path,
                 imageExtension = comicReceived.thumbnail.extension,
+                description = comicReceived.description,
+                issueNumber = comicReceived.issueNumber,
             )
             comics.add(comic)
         }
@@ -57,9 +60,12 @@ object ComicRepository {
 }
 
 data class Comic(
+    val id : Int,
     val name : String,
     val imageUrl : String,
     val imageExtension : String,
+    val description: String?,
+    val issueNumber: Int?,
 ) : Serializable
 
 data class GetComicsResponseWrapper(

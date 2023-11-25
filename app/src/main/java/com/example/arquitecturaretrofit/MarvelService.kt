@@ -28,6 +28,16 @@ interface MarvelService{
         @Query("offset") offset : Int,
         @Query("limit") limit : Int
     ) : GetComicsResponseWrapper
+
+    @GET("comics/{comicId}/characters")
+    suspend fun getComicCharacter(
+        @Path ("comicId") comicId : Int,
+        @Query("apikey") apiKey: String,
+        @Query("ts") ts: String,
+        @Query("hash") hash : String,
+        @Query("offset") offset : Int,
+        @Query("limit") limit : Int
+    ) : GetCharactersResponseWrapper
 }
 
 object MarvelClient{

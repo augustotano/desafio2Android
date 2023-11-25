@@ -4,6 +4,7 @@ import java.io.Serializable
 import java.util.Date
 
 object CharacterRepository {
+    var comicId : Int = 0
     var offset = 0;
     var limit = 30;
     suspend fun fetchCharacters() : List<Character> {
@@ -14,6 +15,21 @@ object CharacterRepository {
                 hash = "$timeStamp${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}".md5().toHex(),
                 offset = offset,
                 limit = limit
+        )
+        offset += limit
+        return obtainCharacterAndComicData(characters)
+    }
+
+
+    suspend fun fetchAllCharacters() : List<Character> {
+        val timeStamp = Date().time.toString()
+        val characters = MarvelClient.service.getComicCharacter(
+            comicId = comicId,
+            apiKey = BuildConfig.PUBLIC_KEY,
+            ts = timeStamp,
+            hash = "$timeStamp${BuildConfig.PRIVATE_KEY}${BuildConfig.PUBLIC_KEY}".md5().toHex(),
+            offset = offset,
+            limit = limit
         )
         offset += limit
         return obtainCharacterAndComicData(characters)

@@ -16,6 +16,7 @@ import com.google.firebase.ktx.Firebase
 public lateinit var auth: FirebaseAuth
 class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFragmentInterface,
     CharacterInfoFragment.CharacterInfoFragmentInterface,
+    ComicInfoFragment.ComicInfoFragmentInterface,
     ComicListFragment.ComicListFragmentInterface,
     LoginFragment.LoginFragmentInterface, 
     RegisterFragment.RegisterFragmentInterface, 
@@ -116,7 +117,13 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     }
 
     override fun onGoToFullComic(comic: Comic) {
-        TODO("Not yet implemented")
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, ComicInfoFragment(comic))
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
     
     override fun onLogin() {
@@ -177,6 +184,15 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         }
     }
 
+    override fun goToAllCharacters(comicId: Int) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, CharacterListFragment())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
+    }
     fun onGoToFavorites(){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, FavoriteListFragment())
