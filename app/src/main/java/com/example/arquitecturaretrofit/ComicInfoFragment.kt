@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.arquitecturaretrofit.databinding.FragmentComicInfoBinding
 
@@ -16,8 +17,13 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
 
     private val comicRepository = ComicRepository
     private lateinit var binding : FragmentComicInfoBinding
-    private var viewModel = CharacterViewModel()
-    private val characterAdapter = CharacterAdapter(null)
+    private var viewModel = ComicCharacterViewModel(comicId = comic.id)
+    private var listener : ComicInfoFragment.ComicInfoFragmentInterface? = null
+    private val characterAdapter = ComicCharactersAdapter(::onGoToFullCharacter)
+
+    interface ComicInfoFragmentInterface{
+        fun onGoToFullCharacter(character: Character)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,14 +57,22 @@ class ComicInfoFragment(var comic: Comic) : Fragment() {
 
         binding.issueNumber.text = comic?.issueNumber?.toString()
 
+        binding.characterView.adapter = characterAdapter
+        binding.characterView.layoutManager = LinearLayoutManager(activity?.baseContext, LinearLayoutManager.HORIZONTAL, false)
+
+
         return binding.root
     }
 
     private fun setObservers() {
-        viewModel.characters.observe(this) { characters ->
+        viewModel.comicCharacter.observe(this) { characters ->
             characterAdapter.dataSet.addAll(characters)
             characterAdapter.notifyDataSetChanged()
         }
+    }
+
+    fun onGoToFullCharacter(character: Character){
+        listener?.onGoToFullCharacter(character)
     }
 
 }
