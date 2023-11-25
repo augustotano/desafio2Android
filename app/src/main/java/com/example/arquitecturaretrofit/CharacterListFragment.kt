@@ -153,15 +153,11 @@ class CharacterListFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.characters.observe(this) { characters ->
-            Log.d("CharacterListFragment", "Received characters: $characters")
-
             activity?.runOnUiThread {
                 characterAdapter.dataSet.clear()
                 characterAdapter.dataSet.addAll(characters)
-                characterAdapter.filter("")
                 listener?.toggleLoadingBar(false)
             }
-
         }
     }
 }
