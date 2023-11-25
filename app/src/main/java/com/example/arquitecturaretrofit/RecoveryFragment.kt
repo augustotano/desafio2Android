@@ -1,6 +1,8 @@
 package com.example.arquitecturaretrofit
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -50,6 +52,9 @@ class RecoveryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.recovery_fragment_title)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(Color.parseColor("#407bb9"))
+        )
     }
 
     fun onRecovery(){

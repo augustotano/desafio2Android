@@ -2,6 +2,8 @@ package com.example.arquitecturaretrofit
 
 import android.R
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
@@ -47,6 +49,9 @@ class CharacterInfoFragment(var character: Character) : Fragment() {
     override fun onResume() {
         super.onResume()
         (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(com.example.arquitecturaretrofit.R.string.character_info_fragment_title)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(Color.parseColor("#407bb9"))
+        )
     }
 
     override fun onCreateView(
