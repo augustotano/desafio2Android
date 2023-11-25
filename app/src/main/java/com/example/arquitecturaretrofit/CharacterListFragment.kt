@@ -59,7 +59,6 @@ class CharacterListFragment : Fragment() {
 
         initRecyclerView()
 
-
         return binding.root
     }
 
@@ -86,11 +85,11 @@ class CharacterListFragment : Fragment() {
                     // Cancelar ejecuciones pendientes del temporizador
                     handler.removeCallbacksAndMessages(null)
 
-                    // Programar una nueva ejecución después de 3 segundos
+                    // Programar una nueva ejecución después de 5 segundos
                     lastQuery = newText
                     handler.postDelayed({
                         if (newText == lastQuery) {
-                            // Realizar la llamada al método después de 3 segundos
+                            // Realizar la llamada al método después de 5 segundos
                             viewModel.queryString = newText
                             viewModel.filterCharacters(resetCache = true)
                         }
