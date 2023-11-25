@@ -21,9 +21,9 @@ import com.example.arquitecturaretrofit.databinding.FragmentCharacterListBinding
 
 class CharacterListFragment : Fragment() {
 
-    private lateinit var binding : FragmentCharacterListBinding
+    private lateinit var binding: FragmentCharacterListBinding
     private lateinit var arrayAdapter: ArrayAdapter<Character>
-    private var listener : CharacterListFragmentInterface? = null
+    private var listener: CharacterListFragmentInterface? = null
     private var viewModel = CharacterViewModel()
     private val characterAdapter = CharacterAdapter(::onGoToFullCharacter)
     private val handler = Handler()
@@ -31,9 +31,9 @@ class CharacterListFragment : Fragment() {
     private var lastQuery: String? = null
 
 
-    interface CharacterListFragmentInterface{
-        fun onGoToFullCharacter(character : Character)
-        fun toggleLoadingBar(active : Boolean)
+    interface CharacterListFragmentInterface {
+        fun onGoToFullCharacter(character: Character)
+        fun toggleLoadingBar(active: Boolean)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class CharacterListFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as? CharacterListFragmentInterface
-        if(listener == null){
+        if (listener == null) {
             throw ClassCastException("Listener needs to implement CharacterListFragmentInterface")
         }
     }
@@ -54,7 +54,12 @@ class CharacterListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.activity_list_item, android.R.id.text1, characterAdapter.filteredDataSet)
+        arrayAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.activity_list_item,
+            android.R.id.text1,
+            characterAdapter.filteredDataSet
+        )
         binding = FragmentCharacterListBinding.inflate(layoutInflater, container, false)
 
         initRecyclerView()
@@ -70,7 +75,11 @@ class CharacterListFragment : Fragment() {
     private fun searchCharacters() {
         binding.searchCharacter.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Toast.makeText(requireContext(), "Buscar resultados con : $query", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Buscar resultados con : $query",
+                    Toast.LENGTH_SHORT
+                ).show()
                 viewModel.queryString = query
                 viewModel.filterCharacters(resetCache = true)
                 return true
@@ -101,22 +110,26 @@ class CharacterListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = characterAdapter
-        binding.recyclerView.addOnScrollListener( object : RecyclerView.OnScrollListener(){
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
                     listener?.toggleLoadingBar(true)
-                    viewModel.refreshCharacters()
+                    if (lastQuery.isNullOrEmpty()) {
+                        viewModel.refreshCharacters()
+                    } else {
+                        viewModel.filterCharacters(resetCache = true)
+                    }
                 }
             }
         })
     }
-
     override fun onResume() {
         super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.apply{
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(false)
             title = resources.getString(R.string.character_list_fragment_title)
         }
@@ -129,11 +142,12 @@ class CharacterListFragment : Fragment() {
 
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    fun onGoToFullCharacter(character : Character){
+    fun onGoToFullCharacter(character: Character) {
         listener?.onGoToFullCharacter(character)
     }
 
@@ -151,3 +165,4 @@ class CharacterListFragment : Fragment() {
         }
     }
 }
+
