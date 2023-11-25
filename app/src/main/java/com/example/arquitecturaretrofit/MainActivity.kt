@@ -59,7 +59,11 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
         // Handle item selection.
         return when (item.itemId) {
             R.id.profile -> {
-                // TO DO
+                onGoToProfile()
+                true
+            }
+            R.id.updateProfile -> {
+                onGoToUpdateProfile()
                 true
             }
             R.id.signOut -> {
@@ -196,6 +200,26 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
     fun onGoToFavorites(){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(binding.fragmentContainer.id, FavoriteListFragment())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    fun onGoToProfile(){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, SeePerfileFragment())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    fun onGoToUpdateProfile(){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, UpdateProfileFragment())
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
         supportActionBar?.apply {

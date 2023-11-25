@@ -10,6 +10,8 @@
         android:title="Favoritos" />
     <item android:id="@+id/profile"
         android:title="Mi perfil" />
+    <item android:id="@+id/updateProfile"
+        android:title="Actualizar perfil" />
     <item android:id="@+id/signOut"
         android:title="Cerrar sesión" />
 </menu>
