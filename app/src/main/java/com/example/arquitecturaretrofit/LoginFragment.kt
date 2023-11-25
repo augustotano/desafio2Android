@@ -111,7 +111,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn(email: String, password: String) {
-        Log.d(TAG, "signIn:$email")
         if (!validateForm()) {
             return
         }
@@ -120,7 +119,6 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
                     Toast.makeText(
                         context,
@@ -130,7 +128,6 @@ class LoginFragment : Fragment() {
                     onLogin()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(
                         context,
                         "Authentication failed.",

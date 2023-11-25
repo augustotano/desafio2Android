@@ -96,7 +96,6 @@ class RegisterFragment : Fragment() {
         return valid
     }
     private fun createAccount(email: String, password: String) {
-        Log.d(TAG, "createAccount:$email")
         if (!validateForm()) {
             return
         }
@@ -106,7 +105,6 @@ class RegisterFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
                     Toast.makeText(
                         context,
@@ -116,7 +114,6 @@ class RegisterFragment : Fragment() {
                     onRegister()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
                         context,
                         "Revise el formato del mail o si la contraseña cumple medidas de seguridad",
@@ -139,7 +136,6 @@ class RegisterFragment : Fragment() {
             if (task.isSuccessful) {
                 Toast.makeText(context, "Reload successful!", Toast.LENGTH_SHORT).show()
             } else {
-                Log.e(TAG, "reload", task.exception)
                 Toast.makeText(context, "Failed to reload user.", Toast.LENGTH_SHORT).show()
             }
         }

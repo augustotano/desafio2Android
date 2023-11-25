@@ -79,10 +79,6 @@ class MainActivity : AppCompatActivity(), CharacterListFragment.CharacterListFra
                 onGoToFavorites()
                 true
             }
-            R.id.search -> {
-                // TO DO
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }

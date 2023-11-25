@@ -38,7 +38,6 @@ class UpdateProfileFragment : Fragment() {
             user!!.updateProfile(profileUpdates)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Log.d(TAG, "User profile updated.")
                         Toast.makeText(
                             context,
                             "Update Sucess",

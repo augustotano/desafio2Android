@@ -25,7 +25,6 @@ object ComicRepository {
     }
 
     suspend fun fetchAllComics() : List<Comic> {
-        Log.d("Test", "It's calling it $offset")
         val timeStamp = Date().time.toString()
         val comics = MarvelClient.service.getComics(
             characterId = characterId,

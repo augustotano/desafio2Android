@@ -66,7 +66,6 @@ class RecoveryFragment : Fragment() {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Log.d(RecoveryFragment.TAG, "Recovery :success")
                     Toast.makeText(
                         context,
                         "Email sent",
